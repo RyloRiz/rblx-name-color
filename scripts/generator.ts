@@ -84,7 +84,11 @@ let ComputeNameValue = (username: string) => {
 
 let GetNameColor = (username: string, version_?: number) => {
 	let chatColors = CHAT_COLORS_BY_VERSION[typeof version_ === 'number' ? version_ - 1 : CHAT_COLORS_BY_VERSION.length - 1];
-	let value = (ComputeNameValue(username) % chatColors.length) + 1;
+	// let value = (ComputeNameValue(username) % chatColors.length); // +1 removed for TS-Lua indices conflict
+	let cmv = ComputeNameValue(username);
+	let len = chatColors.length;
+	let value = cmv - Math.floor(cmv / len) * len // Removed cmv % len, the modulus operator is different in Lua when working with negative numbers
+	// console.log(cmv, len, value);
 	return chatColors[value];
 }
 

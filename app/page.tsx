@@ -10,6 +10,7 @@ export default function Home() {
 	const [username, setUsername] = useState<string>('R0bl0x10501050');
 	const [version, setVersion] = useState<number>(3);
 	const colorRef = useRef<HTMLDivElement>(null);
+	const codesRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		// if (username.length < 2) {
@@ -20,15 +21,15 @@ export default function Home() {
 		// };
 		let color = GetNameColor(username, version);
 		if (color) {
-			colorRef.current!.style.color = 'rgb(255, 0, 0, 0)';
+			colorRef.current!.style.color = 'rgb(255, 255, 255, 1)';
 			colorRef.current!.style.backgroundColor = 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
-			colorRef.current!.innerText = '.';
+			colorRef.current!.innerText = [color.r, color.g, color.b].join(', ');
 		} else {
 			colorRef.current!.style.backgroundColor = 'rgb(' + [0, 0, 0, 0].join(',') + ')';
 			colorRef.current!.innerText = 'Impossible to display color';
 			colorRef.current!.style.color = 'rgb(255, 0, 0, 1)';
 		}
-	}, [username]);
+	}, [username, version]);
 
 	return (<>
 		<div className="w-screen h-screen flex flex-col justify-center items-center">
